@@ -26,6 +26,7 @@
     "glob": "^7.0.3",
     "mkdirp": "^0.5.1",
     "nunjucks": "^2.4.2",
+    "nunjucks-includeData": "0.0.9",
     "yargs": "^4.6.0"
   }
 }

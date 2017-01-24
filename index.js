@@ -33,6 +33,11 @@ var argv = require('yargs')
     boolean: true,
     describe: 'Watch files change, except files starting by "_"'
   })
+  .option('extensions', {
+    alias: 'e',
+    string: true,
+    describe: 'File to load for filters and helpers'
+  })
   .option('options', {
     alias: 'O',
     string: true,
@@ -63,7 +68,12 @@ opts.nunjucks = (argv.options) ? JSON.parse(fs.readFileSync(argv.options, 'utf8'
 // Set Nunjucks environnement
 var env = nunjucks.configure(path.resolve(process.cwd(), opts.dirIn), opts.nunjucks)
 
-// Parse second argument as data context if any
+// Load extensions, if needed
+if (argv.extensions) {
+  require(require.resolve(argv.extensions))(env);
+}
+
+// Parse second argument as data context, if any
 opts.context = (argv._[1]) ? JSON.parse(fs.readFileSync(argv._[1], 'utf8')) : {}
 
 // Set glob options
